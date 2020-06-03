@@ -1,0 +1,14 @@
+Request For Payment SUBMITTED by EMPLOYEE:14:52:04.161430
+Request For Payment APPROVED by ADMINISTRATION:2 days, 11:10:50.639692
+Request For Payment FINAL_APPROVED by SUPERVISOR:3 days, 3:31:34.995394
+Request Payment:3 days, 7:21:47.289846
+Request For Payment REJECTED by ADMINISTRATION:3 days, 2:39:11.003802
+Request For Payment APPROVED by BUDGET OWNER:3 days, 5:10:22.575806
+Request For Payment REJECTED by SUPERVISOR:3 days, 11:31:38.137097
+Request For Payment REJECTED by EMPLOYEE:6 days, 23:12:14.923364
+Request For Payment REJECTED by BUDGET OWNER:1 day, 13:20:27.659574
+Request For Payment APPROVED by SUPERVISOR:2 days, 10:14:20.434783
+Request For Payment FINAL_APPROVED by DIRECTOR:2 days, 4:22:20.652174
+Request For Payment FOR_APPROVAL by ADMINISTRATION:0:01:11
+Payment Handled:12 days, 20:22:16
+Request For Payment FINAL_APPROVED by BUDGET OWNER:8 days, 20:34:29
