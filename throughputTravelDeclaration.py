@@ -21,8 +21,8 @@ def avgThr(df: pandas.DataFrame) -> float:
 
 
 if __name__ == '__main__':
-    domesticLog = xes_import_factory.apply("./logs/DomesticDeclarationsFiltered.xes")
-    internationalLog = xes_import_factory.apply("./logs/InternationalDeclarationsFiltered.xes")
+    domesticLog = xes_import_factory.apply("logs/DomesticDeclarationsFiltered.xes")
+    internationalLog = xes_import_factory.apply("logs/InternationalDeclarationsFiltered.xes")
     domesticDF = converter.apply(domesticLog, None, converter.TO_DATA_FRAME)
     internationalDF = converter.apply(internationalLog, None, converter.TO_DATA_FRAME)
     globalDF = domesticDF.append(internationalDF)

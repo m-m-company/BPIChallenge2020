@@ -36,19 +36,19 @@ if __name__ == '__main__':
     hash_map = {}
     parameter = sys.argv
     if "-all" in parameter:
-        domesticLog = xes_import_factory.apply("./logs/DomesticDeclarationsFiltered.xes")
+        domesticLog = xes_import_factory.apply("logs/DomesticDeclarationsFiltered.xes")
         domesticDF = converter.apply(domesticLog, None, converter.TO_DATA_FRAME)
         appendHashMap(hash_map, domesticDF, "(case)_id", 10, 2)
-        internationalLog = xes_import_factory.apply("./logs/InternationalDeclarationsComplete.xes")
+        internationalLog = xes_import_factory.apply("logs/InternationalDeclarationsComplete.xes")
         internationalDF = converter.apply(internationalLog, None, converter.TO_DATA_FRAME)
         appendHashMap(hash_map, internationalDF, "(case)_id", 23, 2)
-        permitLog = xes_import_factory.apply("./logs/PermitLogFiltered.xes")
+        permitLog = xes_import_factory.apply("logs/PermitLogFiltered.xes")
         permitDF = converter.apply(permitLog, None, converter.TO_DATA_FRAME)
         appendHashMap(hash_map, permitDF, "case:concept:name", 1, 4)
-        prepaidTravelCostLog = xes_import_factory.apply("./logs/PrepaidTravelCostFiltered.xes")
+        prepaidTravelCostLog = xes_import_factory.apply("logs/PrepaidTravelCostFiltered.xes")
         prepaidTravelCostDF = converter.apply(prepaidTravelCostLog, None, converter.TO_DATA_FRAME)
         appendHashMap(hash_map, prepaidTravelCostDF, "case:concept:name", 19, 2)
-        requestForPaymentLog = xes_import_factory.apply("./logs/RequestForPaymentFiltered.xes")
+        requestForPaymentLog = xes_import_factory.apply("logs/RequestForPaymentFiltered.xes")
         requestForPaymentDF = converter.apply(requestForPaymentLog, None, converter.TO_DATA_FRAME)
         appendHashMap(hash_map, requestForPaymentDF, "case:concept:name", 11, 2)
     else:
@@ -56,7 +56,7 @@ if __name__ == '__main__':
             log = xes_import_factory.apply("./logs/" + parameter[i])
             df = converter.apply(log, None, converter.TO_DATA_FRAME)
             appendHashMap(hash_map, df, indexMap[parameter[i]][0], indexMap[parameter[i]][1], indexMap[parameter[i]][2])
-    out = open("throughput" + parameter[1] + ".txt", "w")
+    out = open("output/throughput" + parameter[1] + ".txt", "w")
     for key in hash_map.keys():
         out.write(key + ":" + str(avgThr(hash_map[key])) + "\n")
     out.close()
