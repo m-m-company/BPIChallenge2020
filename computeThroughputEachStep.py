@@ -1,9 +1,9 @@
-import operator
-
-from pm4py.objects.log.importer.xes import factory as xes_import_factory
-from pm4py.objects.conversion.log import converter as converter
-import pandas
 import sys
+
+import pandas
+from pm4py.objects.conversion.log import converter as converter
+from pm4py.objects.log.importer.xes import factory as xes_import_factory
+from matplotlib import pyplot as pl, patches as pt
 
 
 def appendHashMap(hash_map: {}, df: pandas.DataFrame, s: str, concept_name: int, date_index: int):
@@ -23,7 +23,7 @@ def avgThr(values: []):
     sum = values[0]
     for i in range(1, len(values)):
         sum += values[i]
-    return sum/len(values)
+    return sum / len(values)
 
 
 if __name__ == '__main__':
@@ -57,6 +57,17 @@ if __name__ == '__main__':
             df = converter.apply(log, None, converter.TO_DATA_FRAME)
             appendHashMap(hash_map, df, indexMap[parameter[i]][0], indexMap[parameter[i]][1], indexMap[parameter[i]][2])
     out = open("output/throughput" + parameter[1] + ".txt", "w")
+    normalizedValue = []
     for key in hash_map.keys():
-        out.write(key + ":" + str(avgThr(hash_map[key])) + "\n")
+        avg = avgThr(hash_map[key])
+        out.write(key + ":" + str(avg) + "\n")
+        normalizedValue.append(avg.days)
+    bluePatch = pt.Patch(color="blue", label="Mean throughput in days")
+    names = list(hash_map.keys())
+    fig, ax = pl.subplots()
+    fig.set_size_inches(20, 10)
+    pl.legend(handles=[bluePatch])
+    ax.barh(range(len(hash_map)), normalizedValue, tick_label=names)
+    pl.savefig("throughputEachStep.png")
+    pl.show()
     out.close()
