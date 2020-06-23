@@ -1,6 +1,6 @@
 from pm4py.objects.log.importer.xes import factory as xes_import_factory
 from pm4py.objects.conversion.log import converter as converter
-from pandas import DataFrame, Timestamp
+from pandas import DataFrame
 from matplotlib import pyplot as plt, patches as pt, lines as l
 from math import sqrt
 
