@@ -6,6 +6,7 @@ from pandas import DataFrame
 def computeRejected(df: DataFrame, s: str, concept_name: int, rejected_case: []):
     globalRejected = 0
     neverApproved = 0
+
     for case_id, group in df.groupby(s):
         localRejected = 0
         localSubmitted = 0
