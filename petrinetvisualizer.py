@@ -9,4 +9,4 @@ if __name__ == '__main__':
     parameters = {pn_visualizer.Variants.PERFORMANCE.value.Parameters.FORMAT: "png"}
     gviz = pn_visualizer.apply(net, initial_marking, final_marking, parameters=parameters, variant=pn_visualizer.Variants.PERFORMANCE, log=log)
     print(gviz)
-    pn_visualizer.save(gviz, "inductive_frequency.png")
+    pn_visualizer.save(gviz, "output/inductive_frequency.png")
