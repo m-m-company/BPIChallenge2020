@@ -2,20 +2,19 @@ from pm4py.objects.log.importer.xes import factory as xes_import_factory
 from pm4py.objects.conversion.log import converter as converter
 from matplotlib import pyplot as plt, patches as pt, lines as l
 from pandas import DataFrame
+import numpy as np
 
 
 def computeRejected(df: DataFrame, s: str, concept_name: int, rejected_case: []):
     mapRejected = {}
-    mapPieRejected = {}
     mapNeverApproved = {}
-    mapPieNeverApproved = {}
-    totalRejected = 0
-    totalNeverApproved = 0
+    mapTotalCases = {}
     for dep_id, dep in df.groupby("(case)_Permit_OrganizationalEntity"):
         if dep_id != "UNKNOWN":
             dep_id = dep_id.split(" ")[2]
             globalRejected = 0
             neverApproved = 0
+            mapTotalCases[dep_id] = dep.groupby(s).ngroups
             for case_id, group in dep.groupby(s):
                 localRejected = 0
                 localSubmitted = 0
@@ -28,64 +27,34 @@ def computeRejected(df: DataFrame, s: str, concept_name: int, rejected_case: [])
                     globalRejected += 1
                 if localSubmitted <= localRejected:
                     neverApproved += 1
-            totalRejected += globalRejected
-            totalNeverApproved += neverApproved
             mapRejected[dep_id] = globalRejected
             mapNeverApproved[dep_id] = neverApproved
 
-    names = list(mapRejected.keys())
-    for k in names:
-        if (mapRejected[k]/totalRejected) * 100 >= 1:
-            mapPieRejected[k] = (mapRejected[k]/totalRejected) * 100
-        if (mapNeverApproved[k]/totalNeverApproved) * 100 >= 1:
-            mapPieNeverApproved[k] = (mapNeverApproved[k]/totalNeverApproved) * 100
-    values = list(mapRejected.values())
+    labels = list(mapRejected.keys())
+    totalCases = list(mapTotalCases.values())
+    rejected = list(mapRejected.values())
+    neverApproved = list(mapNeverApproved.values())
+
+    x = np.arange(len(labels))
+    width = 0.30
 
     fig, ax = plt.subplots()
-    ax.bar(range(len(mapRejected)), values, tick_label=names)
+    rects1 = ax.bar(x, totalCases, width, label='Total cases')
+    rects2 = ax.bar(x - width, rejected, width, label='Rejected cases')
+    rects3 = ax.bar(x + width, neverApproved, width, label='Never approved cases')
+
+    ax.set_ylabel('Cases')
+    ax.set_title('Cases per department')
+    ax.set_xticks(x)
     plt.xticks(rotation=90)
-    fig.tight_layout()
-    plt.show()
-    fig.savefig('rejectedPerDepartment.png')
+    ax.set_xticklabels(labels)
+    ax.legend()
 
-    names = list(mapNeverApproved.keys())
-    values = list(mapNeverApproved.values())
-
-    plt.close(fig)
-    fig, ax = plt.subplots()
-    ax.bar(range(len(mapNeverApproved)), values, tick_label=names)
-    plt.xticks(rotation=90)
-    fig.tight_layout()
     plt.show()
-    fig.savefig('neverApprovedPerDepartment.png')
-
-    names = list(mapPieRejected.keys())
-    values = list(mapPieRejected.values())
-    plt.close(fig)
-    fig, ax = plt.subplots()
-    ax.pie(values, labels=names, autopct='%1.1f%%')
-    ax.axis('equal')
-    plt.show()
-    fig.savefig('pieRejectedDep.png')
-
-    names = list(mapPieNeverApproved.keys())
-    values = list(mapPieNeverApproved.values())
-    plt.close(fig)
-    fig, ax = plt.subplots()
-    ax.pie(values, labels=names, autopct='%1.1f%%')
-    ax.axis('equal')
-    plt.show()
-    fig.savefig('pieNeverApprovedDep.png')
+    fig.savefig("output/dataForDep.png")
 
 
 if __name__ == '__main__':
-    # domesticLog = xes_import_factory.apply("logs/DomesticDeclarationsFiltered.xes")
-    # domesticDF = converter.apply(domesticLog, None, converter.TO_DATA_FRAME)
-    # rejectedCase = ["Declaration REJECTED by ADMINISTRATION", "Declaration REJECTED by BUDGET OWNER",
-    #                "Declaration REJECTED by SUPERVISOR"]
-    # print("Domestic declarations:\n")
-    # computeRejected(domesticDF, "(case)_id", 10, rejectedCase)
-    # print("\n")
     internationalLog = xes_import_factory.apply("logs/InternationalDeclarationsFiltered.xes")
     internationalDF = converter.apply(internationalLog, None, converter.TO_DATA_FRAME)
     rejectedCase = ["Declaration REJECTED by ADMINISTRATION", "Declaration REJECTED by BUDGET OWNER",
