@@ -1,6 +1,6 @@
 from pm4py.objects.log.importer.xes import factory as xes_import_factory
 from pm4py.objects.conversion.log import converter as converter
-from matplotlib import pyplot as plt, patches as pt, lines as l
+from matplotlib import pyplot as plt
 from pandas import DataFrame
 import numpy as np
 
@@ -39,6 +39,7 @@ def computeRejected(df: DataFrame, s: str, concept_name: int, rejected_case: [])
     width = 0.30
 
     fig, ax = plt.subplots()
+    # the result will be a bar chart with three rects
     rects1 = ax.bar(x, totalCases, width, label='Total cases')
     rects2 = ax.bar(x - width, rejected, width, label='Rejected cases')
     rects3 = ax.bar(x + width, neverApproved, width, label='Never approved cases')

@@ -1,6 +1,3 @@
-from distutils.log import Log
-
-from pandas._libs.tslibs.timestamps import Timestamp
 from pm4py.objects.log.importer.xes import factory as xes_import_factory
 from pm4py.objects.conversion.log import converter as converter
 from pandas import DataFrame

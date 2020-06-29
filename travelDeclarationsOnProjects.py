@@ -3,7 +3,7 @@ from pm4py.objects.conversion.log import converter as converter
 from pandas import DataFrame
 
 
-def countDeclarationsOnProject(df: DataFrame, s: str, conceptName: int):
+def countDeclarationsOnProject(df: DataFrame, s: str):
     count = 0
     for case_id, group in df.groupby(s):
         if group.iloc[0]["T:ProjectNumber"] != "UNKNOWN":

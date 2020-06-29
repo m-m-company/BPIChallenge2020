@@ -30,6 +30,7 @@ def findNumberCases(df: DataFrame):
     values = list(mapPercent.values())
     plt.close(fig)
     fig, ax = plt.subplots()
+    # this function create a pie chart
     ax.pie(values, labels=names, autopct='%1.1f%%')
     ax.axis('equal')
     plt.show()

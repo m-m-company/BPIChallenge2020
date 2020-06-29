@@ -30,6 +30,7 @@ def avgThr(values: []):
 
 
 if __name__ == '__main__':
+    # we run this script with command line just for simplify the execution
     indexMap = {"DomesticDeclarationsFiltered.xes": ("(case)_id", 10, 2),
                 "InternationalDeclarationsComplete.xes": ("(case)_id", 23, 2),
                 "PermitLogFiltered.xes": ("case:concept:name", 1, 4),
